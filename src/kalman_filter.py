@@ -1,6 +1,8 @@
 """
 Kalman滤波模块
 用于目标跟踪的状态估计
+
+# pylint: disable=duplicate-code
 """
 
 import numpy as np

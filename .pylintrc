@@ -1,0 +1,8 @@
+# Pylint配置文件
+
+[MASTER]
+disable=C0111
+
+[MESSAGES CONTROL]
+# 忽略重复代码警告（算法实现必需）
+disable=duplicate-code

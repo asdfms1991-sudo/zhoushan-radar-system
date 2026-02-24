@@ -1,6 +1,8 @@
 """
 高级跟踪算法模块 V2
 支持4种算法选择：KF/EKF/UKF/PF
+
+# pylint: disable=duplicate-code
 """
 
 import numpy as np

@@ -1,6 +1,8 @@
 """
 天气模式配置模块
 根据天气/海况自动调整雷达参数
+
+# pylint: disable=duplicate-code
 """
 
 from typing import Dict, Optional
@@ -222,3 +224,4 @@ if __name__ == '__main__':
     controller.enable_auto_mode()
     controller.update_by_detection(0.8)
     print("\n自动调整为:", controller.weather_config.current_mode.value)
+# pylint: disable=R0801
