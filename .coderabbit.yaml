@@ -1,0 +1,90 @@
+# CodeRabbit Configuration
+# AI-powered Code Review Tool
+# https://coderabbit.ai
+
+version: "1"
+review:
+  high_level_summary:
+    title: "AI Code Review Summary"
+    show_line_numbers: true
+    show_files_changed: true
+  
+  auto_title_placeholder: "AI Review"
+  
+  chat:
+    auto_reply: true
+  
+  collapse_walkthrough: false
+  
+  checklist:
+    status: "in_progress"
+    items:
+      - label: "Security Check"
+        description: "Check for security vulnerabilities"
+        checked: false
+      - label: "Testing"
+        description: "Verify tests pass"
+        checked: false
+      - label: "Documentation"
+        description: "Check documentation completeness"
+        checked: false
+  
+  paths:
+    exclude:
+      - "*.md"
+      - "*.log"
+      - "logs/**"
+      - "data/**"
+      - "venv/**"
+      - ".git/**"
+
+chat:
+  auto_reply: true
+
+cx_filters:
+  exclude:
+    - "*.md"
+    - "*.log"
+
+profile:
+  name: "radar-review"
+  description: "Radar system code review profile"
+  
+  review_status: "on"
+  high_level_summary: "on"
+  auto_titlePlaceholder: "on"
+  collapse_walkthrough: "off"
+  sequence_diagrams: "on"
+  
+  categories:
+    show_in_graph: "on"
+    
+  checks:
+    "any-name-matches":
+      level: "off"
+    bash:
+      shellcheck:
+        level: "warning"
+    javascript:
+      prettier:
+        level: "off"
+    python:
+      flake8:
+        level: "warning"
+      pylint:
+        level: "off"
+    security:
+      bandit:
+        level: "warning"
+      safeyaml:
+        level: "on"
+
+# Notification settings
+notifications:
+  review_status: true
+  collapse_walkthrough: true
+  sequence_diagrams: true
+  
+  # Slack/Discord webhook (optional)
+  # slack: "your-webhook-url"
+  # discord: "your-webhook-url"
