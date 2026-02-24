@@ -1,0 +1,55 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install pytest pytest-cov
+    
+    - name: Run tests
+      run: |
+        pytest tests/ -v --cov=src --cov-report=xml
+    
+    - name: Code quality check
+      run: |
+        pip install bandit pylint
+        bandit -r src/ -f txt
+        pylint src/*.py --disable=import-error
+    
+    - name: Upload coverage
+      uses: codecov/codecov-action@v3
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build Docker
+      run: |
+        docker build -t radar-system:${{ github.sha }} .
+    
+    - name: Test Docker
+      run: |
+        docker run -d --name radar-test -p 8081:8081 radar-system:${{ github.sha }}
+        sleep 5
+        curl -f http://localhost:8081/api/targets || exit 1
+        docker stop radar-test

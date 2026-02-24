@@ -1,0 +1,91 @@
+{
+    "system": {
+        "name": "舟山定海渔港雷达监控系统",
+        "version": "2.0.0",
+        "log_level": "INFO",
+        "data_dir": "data",
+        "log_dir": "logs"
+    },
+    "radar": {
+        "enabled": true,
+        "type": "simrad_halo3000",
+        "connection": {
+            "method": "network",
+            "ip": "192.168.1.100",
+            "port": 2000,
+            "protocol": "tcp",
+            "timeout": 30,
+            "retry_interval": 5
+        },
+        "origin": {
+            "lon": 122.107,
+            "lat": 30.017
+        },
+        "filter": {
+            "min_distance_nm": 0.05,
+            "max_distance_nm": 15.0,
+            "min_speed_knots": 0.0,
+            "max_speed_knots": 50.0,
+            "clutter_filter": true,
+            "min_track_age": 2
+        }
+    },
+    "ais": {
+        "enabled": true,
+        "connection": {
+            "method": "serial",
+            "port": "COM3",
+            "baudrate": 38400
+        },
+        "or_network": {
+            "enabled": false,
+            "ip": "127.0.0.1",
+            "port": 5001
+        }
+    },
+    "fusion": {
+        "enabled": true,
+        "association_distance_m": 100,
+        "max_age_seconds": 60,
+        "kalman": {
+            "process_noise": 0.1,
+            "measurement_noise": 1.0
+        },
+        "cfar": {
+            "guard_cells": 2,
+            "ref_cells": 16,
+            "p_fa": 0.0001
+        },
+        "clutter": {
+            "min_speed": 0.5,
+            "max_speed": 50.0,
+            "min_distance": 0.05,
+            "max_distance": 20.0
+        },
+        "storage": {
+            "enabled": true,
+            "path": "data/trajectories",
+            "format": "json"
+        }
+    },
+    "output": {
+        "websocket": {
+            "enabled": true,
+            "host": "0.0.0.0",
+            "port": 8080
+        },
+        "http": {
+            "enabled": true,
+            "host": "0.0.0.0",
+            "port": 8081
+        }
+    },
+    "monitoring": {
+        "health_check_interval": 60,
+        "log_rotation": {
+            "enabled": true,
+            "max_size_mb": 100,
+            "backup_count": 5
+        }
+    }
+}
